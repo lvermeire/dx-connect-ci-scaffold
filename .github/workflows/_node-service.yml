@@ -29,15 +29,19 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version-file: ${{ inputs.service-path }}/package.json
+          node-version: '22'
           cache: npm
           cache-dependency-path: ${{ inputs.service-path }}/package-lock.json
-      - name: Install dependencies
+      - uses: arduino/setup-task@v2
+        with:
+          version: 3.x
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install
         working-directory: ${{ inputs.service-path }}
-        run: npm ci
+        run: task install
       - name: Lint
         working-directory: ${{ inputs.service-path }}
-        run: npm run lint
+        run: task lint
 
   test:
     name: Test
@@ -46,15 +50,19 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version-file: ${{ inputs.service-path }}/package.json
+          node-version: '22'
           cache: npm
           cache-dependency-path: ${{ inputs.service-path }}/package-lock.json
-      - name: Install dependencies
+      - uses: arduino/setup-task@v2
+        with:
+          version: 3.x
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install
         working-directory: ${{ inputs.service-path }}
-        run: npm ci
-      - name: Run tests
+        run: task install
+      - name: Test
         working-directory: ${{ inputs.service-path }}
-        run: npm test
+        run: task test
 
   npm-audit:
     name: npm audit
@@ -63,15 +71,19 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version-file: ${{ inputs.service-path }}/package.json
+          node-version: '22'
           cache: npm
           cache-dependency-path: ${{ inputs.service-path }}/package-lock.json
-      - name: Install dependencies
+      - uses: arduino/setup-task@v2
+        with:
+          version: 3.x
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install
         working-directory: ${{ inputs.service-path }}
-        run: npm ci
+        run: task install
       - name: Audit
         working-directory: ${{ inputs.service-path }}
-        run: npm audit --audit-level=moderate
+        run: task audit
 
   build-image:
     name: Build image
@@ -113,7 +125,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: trufflesecurity/trufflehog@v3
+      - uses: trufflesecurity/trufflehog@v3.94.3
         with:
           extra_args: --only-verified
 
@@ -126,7 +138,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Scan with Trivy
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.35.0
         with:
           scan-type: fs
           scan-ref: ${{ inputs.service-path }}
