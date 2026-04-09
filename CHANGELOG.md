@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://github.com/lvermeire/dx-connect-ci-scaffold/compare/v0.2.0...v1.0.0) (2026-04-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* promote to stable v1.0.0
+
+### Features
+
+* promote to stable v1.0.0 ([66a7c2d](https://github.com/lvermeire/dx-connect-ci-scaffold/commit/66a7c2da088ecf01a8c087b848281e3ee72b9007))
+
 ## [0.2.0](https://github.com/lvermeire/dx-connect-ci-scaffold/compare/v0.1.0...v0.2.0) (2026-04-09)
 
 
