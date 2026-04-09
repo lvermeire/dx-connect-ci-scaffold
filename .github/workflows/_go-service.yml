@@ -31,12 +31,12 @@ jobs:
         with:
           go-version-file: ${{ inputs.service-path }}/go.mod
           cache: true
-      - uses: arduino/setup-task@v2
+      - uses: go-task/setup-task@v2
         with:
           version: 3.x
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install golangci-lint
-        run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b /usr/local/bin v2.1.6
+        run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b /usr/local/bin v2.11.4
       - name: Lint
         working-directory: ${{ inputs.service-path }}
         run: task lint
@@ -50,7 +50,7 @@ jobs:
         with:
           go-version-file: ${{ inputs.service-path }}/go.mod
           cache: true
-      - uses: arduino/setup-task@v2
+      - uses: go-task/setup-task@v2
         with:
           version: 3.x
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -67,7 +67,7 @@ jobs:
         with:
           go-version-file: ${{ inputs.service-path }}/go.mod
           cache: true
-      - uses: arduino/setup-task@v2
+      - uses: go-task/setup-task@v2
         with:
           version: 3.x
           repo-token: ${{ secrets.GITHUB_TOKEN }}
