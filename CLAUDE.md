@@ -14,7 +14,7 @@ Plan A (Foundation) is merged to `main`. Active implementation is Plan B (CI/CD 
 
 Two independent services under `services/`, each with its own module/package system and Taskfile. A root `Taskfile.yml` aggregates them via `includes:` namespacing.
 
-- **`services/api/`** — Go 1.23 + chi v5. Module path: `github.com/loic-vermeire/dx-connect-ci-scaffold/services/api`. Internal packages at `internal/store/` and `internal/handler/`. Entrypoint at `cmd/server/main.go`.
+- **`services/api/`** — Go 1.23 + chi v5. Module path: `github.com/lvermeire/dx-connect-ci-scaffold/services/api`. Internal packages at `internal/store/` and `internal/handler/`. Entrypoint at `cmd/server/main.go`.
 - **`services/web/`** — Vue 3 + Vite 6 + Vitest 3. Built static assets served by nginx:alpine in production.
 - **`deploy/azure/`** — Azure Container Apps configs (placeholder for now).
 
