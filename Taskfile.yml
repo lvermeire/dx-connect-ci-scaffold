@@ -1,0 +1,41 @@
+version: '3'
+
+includes:
+  api:
+    taskfile: ./services/api/Taskfile.yml
+    dir: ./services/api
+  web:
+    taskfile: ./services/web/Taskfile.yml
+    dir: ./services/web
+
+tasks:
+  build:
+    desc: Build all services
+    deps: [api:build, web:build]
+
+  test:
+    desc: Test all services
+    deps: [api:test, web:test]
+
+  lint:
+    desc: Lint all services
+    deps: [api:lint, web:lint]
+
+  audit:
+    desc: Run security audits for all services
+    deps: [api:audit, web:audit]
+
+  up:
+    desc: Start all services with docker compose
+    cmds:
+      - docker compose up --build
+
+  up:detach:
+    desc: Start all services in background
+    cmds:
+      - docker compose up --build -d
+
+  down:
+    desc: Stop all services
+    cmds:
+      - docker compose down
