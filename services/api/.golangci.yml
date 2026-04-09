@@ -11,3 +11,8 @@ linters:
     - staticcheck
     - unused
     - bodyclose
+    # NOTE: goimports and gci are not available in golangci-lint v2 (verified against v2.11.4).
+    # Import grouping/ordering is not enforced by the linter. Developers should use
+    # `goimports -local github.com/loic-vermeire/dx-connect-ci-scaffold` in their editor
+    # or via `goimports` pre-commit hook to maintain the three-group import convention
+    # (stdlib / external / local).
