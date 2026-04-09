@@ -6,8 +6,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/loic-vermeire/dx-connect-ci-scaffold/services/api/internal/handler"
-	"github.com/loic-vermeire/dx-connect-ci-scaffold/services/api/internal/store"
+	"github.com/lvermeire/dx-connect-ci-scaffold/services/api/internal/handler"
+	"github.com/lvermeire/dx-connect-ci-scaffold/services/api/internal/store"
 )
 
 func newTestHandler() *handler.Handler {

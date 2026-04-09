@@ -3,7 +3,7 @@ package store_test
 import (
 	"testing"
 
-	"github.com/loic-vermeire/dx-connect-ci-scaffold/services/api/internal/store"
+	"github.com/lvermeire/dx-connect-ci-scaffold/services/api/internal/store"
 )
 
 func TestItemStore_EmptyOnCreate(t *testing.T) {

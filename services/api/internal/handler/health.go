@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/loic-vermeire/dx-connect-ci-scaffold/services/api/internal/store"
+	"github.com/lvermeire/dx-connect-ci-scaffold/services/api/internal/store"
 )
 
 // Handler holds dependencies for all HTTP handlers.
