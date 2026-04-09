@@ -57,3 +57,23 @@ jobs:
       image-name: ghcr.io/lvermeire/web
       push-image: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
       trivy-severity: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' && 'HIGH,CRITICAL' || '' }}
+
+  # Gate job: always runs, fails if any upstream job failed or was cancelled.
+  # Branch protection requires only this check, not the individual service jobs.
+  # When a service's paths didn't change, its job is "skipped" — that's fine here.
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    needs: [detect-changes, api-ci, web-ci]
+    if: always()
+    steps:
+      - name: Check all jobs passed or were skipped
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: |
+          if echo "$RESULTS" | jq -e '[.[].result] | any(. == "failure" or . == "cancelled")' > /dev/null; then
+            echo "One or more jobs failed or were cancelled."
+            echo "$RESULTS" | jq '[to_entries[] | {job: .key, result: .value.result}]'
+            exit 1
+          fi
+          echo "All jobs passed or were skipped."

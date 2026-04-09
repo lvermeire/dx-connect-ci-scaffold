@@ -14,37 +14,31 @@ REPO="${GH_REPO:-${GITHUB_REPOSITORY:-lvermeire/dx-connect-ci-scaffold}}"
 
 echo "Configuring branch protection for main on ${REPO}..."
 
-# Status check names are the job *display names* as they appear in GitHub UI.
-# With reusable workflows, they are prefixed by the calling job name:
-#   "API / Lint", "API / Test", "Web / Lint", etc.
-# Run CI once first, then verify names at:
-#   https://github.com/lvermeire/dx-connect-ci-scaffold/settings/branches
-CHECKS=(
-  "API / Lint"
-  "API / Test"
-  "API / govulncheck"
-  "API / Secret scan"
-  "API / Trivy scan"
-  "Web / Lint"
-  "Web / Test"
-  "Web / npm audit"
-  "Web / Secret scan"
-  "Web / Trivy scan"
-)
+# Only the gate job is required. Individual service jobs (API / Lint, Web / Test,
+# etc.) are visible in PRs but not blocking — they are skipped when their paths
+# didn't change, which would otherwise prevent unrelated PRs from merging.
+CHECKS=("CI")
 
-# Build the contexts JSON array
+# Build the full JSON body — gh api --field cannot send nested arrays correctly
 CONTEXTS_JSON=$(printf '%s\n' "${CHECKS[@]}" | jq -R . | jq -sc .)
 
-gh api "repos/${REPO}/branches/main/protection" \
+BODY=$(jq -n \
+  --argjson contexts "$CONTEXTS_JSON" \
+  '{
+    required_status_checks: { strict: true, contexts: $contexts },
+    enforce_admins: false,
+    required_pull_request_reviews: {
+      required_approving_review_count: 1,
+      dismiss_stale_reviews: true
+    },
+    restrictions: null,
+    allow_force_pushes: false,
+    allow_deletions: false
+  }')
+
+echo "$BODY" | gh api "repos/${REPO}/branches/main/protection" \
   --method PUT \
   --header "Accept: application/vnd.github+json" \
-  --field "required_status_checks[strict]=true" \
-  --field "required_status_checks[contexts]=${CONTEXTS_JSON}" \
-  --field "enforce_admins=false" \
-  --field "required_pull_request_reviews[required_approving_review_count]=1" \
-  --field "required_pull_request_reviews[dismiss_stale_reviews]=true" \
-  --field "restrictions=null" \
-  --field "allow_force_pushes=false" \
-  --field "allow_deletions=false"
+  --input -
 
 echo "Branch protection configured for main."
