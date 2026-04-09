@@ -8,7 +8,7 @@ A reference monorepo demonstrating production-grade CI/CD practices on GitHub Ac
 
 ## Repository Status
 
-Implementation is in progress via `feature/foundation` branch (worktree at `.worktrees/foundation`). The `main` branch holds only docs and configuration scaffolding. Active code work happens in the worktree.
+Plan A (Foundation) is merged to `main`. Active implementation is Plan B (CI/CD pipelines) on `feature/cicd-pipelines` (worktree at `.worktrees/cicd`).
 
 ## Architecture
 
@@ -63,11 +63,11 @@ See `docs/superpowers/specs/2026-04-09-cicd-scaffold-design.md` for the full app
 
 ## Implementation Plans
 
-- `docs/superpowers/plans/2026-04-09-foundation.md` — Plan A: scaffold, services, Taskfiles, Dockerfiles
-- Plan B (CI/CD pipelines) to be written after Plan A completes.
+- `docs/superpowers/plans/2026-04-09-foundation.md` — Plan A: scaffold, services, Taskfiles, Dockerfiles (merged)
+- `docs/superpowers/plans/2026-04-09-cicd-pipelines.md` — Plan B: GitHub Actions workflows, release-please, Renovate, branch protection
 
 ## Git Worktrees
 
-Active worktree: `.worktrees/foundation` on branch `feature/foundation`. The `.worktrees/` directory is gitignored.
+Active worktree: `.worktrees/cicd` on branch `feature/cicd-pipelines`. The `.worktrees/` directory is gitignored.
 
 When dispatching subagents for implementation tasks, always instruct them to `cd` to the worktree path once at the start and use relative paths for all subsequent commands. This avoids repeated permission prompts for chained `cd && command` patterns.
