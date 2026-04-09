@@ -11,6 +11,12 @@ export default [
     },
   },
   {
+    files: ['**/*.test.js'],
+    languageOptions: {
+      globals: { ...globals.browser, ...globals.node },
+    },
+  },
+  {
     ignores: ['dist/', 'node_modules/'],
   },
 ]
