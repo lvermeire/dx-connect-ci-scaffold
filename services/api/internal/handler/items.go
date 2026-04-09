@@ -18,8 +18,16 @@ func (h *Handler) ListItems(w http.ResponseWriter, r *http.Request) {
 // CreateItem parses a JSON body and creates a new item.
 func (h *Handler) CreateItem(w http.ResponseWriter, r *http.Request) {
 	var req createRequest
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil || req.Name == "" {
-		http.Error(w, `{"error":"name is required"}`, http.StatusBadRequest)
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(`{"error":"invalid JSON"}`)) //nolint:errcheck
+		return
+	}
+	if req.Name == "" {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(`{"error":"name is required"}`)) //nolint:errcheck
 		return
 	}
 	item := h.items.Create(req.Name)
