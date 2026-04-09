@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  detect-changes:
+    name: Detect changed paths
+    runs-on: ubuntu-latest
+    outputs:
+      api: ${{ steps.filter.outputs.api }}
+      web: ${{ steps.filter.outputs.web }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            api:
+              - 'services/api/**'
+              - '.github/workflows/ci.yml'
+              - '.github/workflows/_go-service.yml'
+            web:
+              - 'services/web/**'
+              - '.github/workflows/ci.yml'
+              - '.github/workflows/_node-service.yml'
+
+  api-ci:
+    name: API
+    needs: detect-changes
+    if: needs.detect-changes.outputs.api == 'true'
+    uses: ./.github/workflows/_go-service.yml
+    permissions:
+      contents: read
+      packages: write
+      security-events: write
+    with:
+      service-path: services/api
+      image-name: ghcr.io/lvermeire/api
+      push-image: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+      trivy-severity: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' && 'HIGH,CRITICAL' || '' }}
+
+  web-ci:
+    name: Web
+    needs: detect-changes
+    if: needs.detect-changes.outputs.web == 'true'
+    uses: ./.github/workflows/_node-service.yml
+    permissions:
+      contents: read
+      packages: write
+      security-events: write
+    with:
+      service-path: services/web
+      image-name: ghcr.io/lvermeire/web
+      push-image: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+      trivy-severity: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' && 'HIGH,CRITICAL' || '' }}
