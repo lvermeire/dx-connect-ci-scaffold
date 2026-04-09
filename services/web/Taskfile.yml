@@ -1,0 +1,47 @@
+version: '3'
+
+tasks:
+  install:
+    desc: Install dependencies
+    cmds:
+      - npm ci
+
+  build:
+    desc: Build the Vue app for production
+    cmds:
+      - npm run build
+
+  test:
+    desc: Run tests
+    cmds:
+      - npm run test
+
+  test:watch:
+    desc: Run tests in watch mode
+    cmds:
+      - npm run test:watch
+
+  lint:
+    desc: Run ESLint
+    cmds:
+      - npm run lint
+
+  audit:
+    desc: Run npm audit
+    cmds:
+      - npm audit --audit-level=moderate
+
+  run:
+    desc: Start Vite dev server (proxies /api to localhost:8080)
+    cmds:
+      - npm run dev
+
+  docker:build:
+    desc: Build Docker image
+    cmds:
+      - docker build -t web:dev .
+
+  docker:run:
+    desc: Run Docker image on port 3000
+    cmds:
+      - docker run --rm -p 3000:80 web:dev
