@@ -18,14 +18,14 @@ jobs:
       pull-requests: write
     steps:
       - uses: googleapis/release-please-action@16a9c90856f42705d54a6fda1823352bdc62cf38 # v4
-        name: rp
+        id: rp
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - run: echo "$OUTPUTS"
         shell: bash
         env:
-          OUTPUTS: ${{ toJSON(steps.rp.outputs) }}
+          OUTPUTS: ${{ toJSON(steps.rp.outputs.*) }}
 
 
   # Runs when a release tag (v*) is pushed — i.e. after the release PR is merged.
