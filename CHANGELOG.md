@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/lvermeire/dx-connect-ci-scaffold/compare/v1.0.1...v1.1.0) (2026-04-13)
+
+
+### Features
+
+* update all deps ([#30](https://github.com/lvermeire/dx-connect-ci-scaffold/issues/30)) ([9855a45](https://github.com/lvermeire/dx-connect-ci-scaffold/commit/9855a452855623e281d0609ceac38b83fdbb5478))
+
 ## [1.0.1](https://github.com/lvermeire/dx-connect-ci-scaffold/compare/v1.0.0...v1.0.1) (2026-04-13)
 
 
