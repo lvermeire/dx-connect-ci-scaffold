@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/lvermeire/dx-connect-ci-scaffold/compare/v1.0.0...v1.0.1) (2026-04-13)
+
+
+### Bug Fixes
+
+* fix ci output tests ([#21](https://github.com/lvermeire/dx-connect-ci-scaffold/issues/21)) ([7587e2a](https://github.com/lvermeire/dx-connect-ci-scaffold/commit/7587e2a7c665f4470edbf5dda47284b062bcdd6e))
+
 ## [1.0.0](https://github.com/lvermeire/dx-connect-ci-scaffold/compare/v0.2.0...v1.0.0) (2026-04-09)
 
 
