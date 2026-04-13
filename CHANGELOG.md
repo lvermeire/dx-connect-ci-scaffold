@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/lvermeire/dx-connect-ci-scaffold/compare/v1.1.0...v1.1.1) (2026-04-13)
+
+
+### Bug Fixes
+
+* **release:** trigger publish jobs from release-please outputs, not tag push ([#32](https://github.com/lvermeire/dx-connect-ci-scaffold/issues/32)) ([2ea091f](https://github.com/lvermeire/dx-connect-ci-scaffold/commit/2ea091f2a995bfe70ece4540af41797c48fda845))
+
 ## [1.1.0](https://github.com/lvermeire/dx-connect-ci-scaffold/compare/v1.0.1...v1.1.0) (2026-04-13)
 
 
